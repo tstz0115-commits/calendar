@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2027년 토요일 근무 스케줄</title>
+<style>
+:root { 
+    --primary: #3b82f6; --primary-hover: #2563eb; --bg: #f8fafc; --card: #ffffff; 
+    --text-main: #0f172a; --text-muted: #64748b; --border: #cbd5e1; --sat: #1d4ed8; 
+    --sat-bg: #eff6ff; --sun: #dc2626; --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 12px 8px; line-height: 1.4; }
+.container { max-width: 900px; margin: 0 auto; }
+.top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.top-header h1 { font-size: 1.25rem; color: var(--text-main); margin: 0; font-weight: 700; }
+.help-btn { background: transparent; border: none; font-size: 1.3rem; cursor: pointer; padding: 4px; }
+.card { background: var(--card); border-radius: 10px; padding: 12px; box-shadow: var(--shadow-sm); margin-bottom: 12px; border: 1px solid var(--border); }
+.compact-select { padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.875rem; background-color: #fff; color: var(--text-main); }
+.btn { background-color: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem; }
+.btn-outline { background: #fff; color: var(--text-main); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+.tab-container { display: flex; gap: 4px; margin-bottom: 12px; background: #e2e8f0; padding: 3px; border-radius: 8px; }
+.tab-btn { flex: 1; padding: 8px 4px; text-align: center; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: var(--text-muted); }
+.tab-btn.active { background: #ffffff; color: var(--primary); box-shadow: var(--shadow-sm); }
+.cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 700; font-size: 1rem; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.cal-day-header { background: #f1f5f9; padding: 6px 1px; text-align: center; font-size: 0.725rem; font-weight: 700; color: var(--text-muted); }
+.cal-day-header:nth-child(1) { color: var(--sun); }
+.cal-day-header:nth-child(7) { color: var(--sat); background: #e0f2fe; }
+.cal-cell { background: white; min-height: 58px; padding: 2px 1px; display: flex; flex-direction: column; justify-content: flex-start; position: relative; overflow: hidden; }
+.cal-cell.sat { background-color: var(--sat-bg); }
+.cal-cell.other-month { background: #f8fafc; opacity: 0.4; }
+.cal-date-num { font-weight: 700; font-size: 0.75rem; color: var(--text-main); padding-left: 2px; }
+.cal-cell.sat .cal-date-num { color: var(--sat); }
+.cal-cell.sun .cal-date-num, .cal-cell.holiday .cal-date-num { color: var(--sun); }
+.cal-cell.today { background-color: #fef9c3 !important; border: 2px solid #eab308 !important; }
+.cal-cell.today .cal-date-num { color: #854d0e !important; font-weight: 900; }
+.today-badge { position: absolute; top: 1px; right: 1px; font-size: 0.5rem; background: #eab308; color: white; padding: 0px 2px; border-radius: 2px; font-weight: 600; }
+.cal-badge { padding: 0; margin-top: 1px; text-align: center; width: 100%; box-sizing: border-box; font-size: 0.68rem; line-height: 1.2; word-break: break-all; }
+.bg-work-clean { color: #0f172a; font-weight: 600; }
+.bg-mywork { background: #fef08a; color: #854d0e; font-weight: 800; border-radius: 3px; padding: 1px 0; }
+.bg-swapped { background: #dcfce7; color: #166534; font-weight: 800; border-radius: 3px; padding: 1px 0; }
+.bg-holiday { color: #dc2626; font-weight: 700; font-size: 0.6rem; }
+table { width: 100%; border-collapse: separate; border-spacing: 0; background: white; font-size: 0.825rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+th, td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 6px; text-align: center; vertical-align: middle; }
+th:last-child, td:last-child { border-right: none; }
+tr:last-child td { border-bottom: none; }
+th { background-color: #f1f5f9; color: var(--text-muted); font-weight: 600; }
+.holiday-row { background-color: #fef2f2; color: #dc2626; font-weight: 600; }
+mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radius: 3px; }
+.swapped-name { background-color: #dcfce7; color: #166534; padding: 2px 4px; border-radius: 3px; border: 1px solid #bbf7d0; }
+.swap-info-badge { font-size: 0.75rem; color: #166534; font-weight: 600; }
+.sub-tabs { display: flex; gap: 6px; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.sub-tab-btn { background: none; border: none; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding: 4px 8px; border-radius: 4px; }
+.sub-tab-btn.active { background: #eff6ff; color: var(--primary); }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="top-header">
+        <h1>📆 2027년 토요일 근무</h1>
+    </div>
+
+    <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-weight:700; font-size:0.875rem;">👤 근무자 선택:</div>
+            <select id="userFilter" class="compact-select" onchange="onFilterChange()"><option value="ALL">전체 보기</option></select>
+        </div>
+    </div>
+    <div class="tab-container">
+        <div class="tab-btn active" id="tabCal" onclick="switchTab('cal')">📅 캘린더 보기</div>
+        <div class="tab-btn" id="tabList" onclick="switchTab('list')">📋 상세 근무표</div>
+    </div>
+    <div id="calView" class="card">
+        <div class="cal-nav">
+            <button class="btn-outline" onclick="changeMonth(-1)">◀ 이전달</button>
+            <span id="calMonthTitle">2027년 1월</span>
+            <button class="btn-outline" onclick="changeMonth(1)">다음달 ▶</button>
+        </div>
+        <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div id="listView" class="card" style="display:none;">
+        <div style="overflow-x: auto;">
+            <table>
+                <thead><tr><th>날짜 (요일)</th><th>특검</th><th>폐알혈</th><th>비고</th></tr></thead>
+                <tbody id="tblBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 style="font-size:0.95rem; color:var(--text-main); margin:0 0 10px 0;">🔄 대체 근무 변경</h2>
+        <div class="sub-tabs">
+            <button class="sub-tab-btn active" id="subTabDate" onclick="switchSubTab('date')">📌 특정 날짜 변경</button>
+            <button class="sub-tab-btn" id="subTabAll" onclick="switchSubTab('all')">👥 전체 일괄 변경</button>
+        </div>
+
+        <div id="swapDateMode">
+            <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <span style="font-size:0.825rem; font-weight:600; width:70px;">📅 날짜:</span>
+                    <select id="swapDateSelect" class="compact-select" style="flex:1;" onchange="onSwapDateChange()"></select>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <span style="font-size:0.825rem; font-weight:600; width:70px;">📌 구분:</span>
+                    <select id="swapRoleSelect" class="compact-select" style="flex:1;" onchange="onSwapDateChange()">
+                        <option value="tuk">특검 근무자</option>
+                        <option value="pye">폐알혈 근무자</option>
+                    </select>
+                </div>
+                <div style="display:flex; gap:6px; align-items:center;">
+                    <span style="font-size:0.825rem; font-weight:600; width:70px;">👤 변경:</span>
+                    <span id="currentWorkerName" style="font-size:0.85rem; font-weight:700; color:var(--primary); width:60px;">-</span>
+                    <span style="color:var(--text-muted);">➔</span>
+                    <select id="singleTargetMember" class="compact-select" style="flex:1;"></select>
+                </div>
+                <div style="display:flex; gap:6px; margin-top:4px;">
+                    <button class="btn" onclick="applySwapSingleUser()">선택 날짜 변경</button>
+                    <button class="btn-outline" style="width:100px;" onclick="undoSwapUser()">↩️ 되돌리기</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="swapAllMode" style="display:none;">
+            <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+                <select id="swapFromMember" class="compact-select" style="flex:1; min-width:80px;"></select>
+                <span style="color:var(--text-muted);">➔</span>
+                <select id="swapToMember" class="compact-select" style="flex:1; min-width:80px;"></select>
+                <button class="btn" onclick="applySwapAllUser()">일괄 변경</button>
+                <button class="btn-outline" onclick="undoSwapUser()">↩️ 되돌리기</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2 style="font-size:0.95rem; color:var(--text-main); margin:0 0 10px 0;">📊 근무 통계</h2>
+        <div id="userStatsUI" style="overflow-x: auto;"></div>
+    </div>
+</div>
+
+<script>
+var GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwuPjha_MWe-rVIqJYdWZA3gasmM1Yn7pyvDCn2D_I_eDr38YBJC7BEMgk0K9mShPEx/exec";
+var targetYear = 2027;
+var currentMonth = 0;
+var scheduleData = [];
+var members = [{"name":"미선","role":"폐"},{"name":"미정","role":"ALL"},{"name":"보연","role":"ALL"},{"name":"소현","role":"ALL"},{"name":"지영","role":"ALL"},{"name":"한오","role":"ALL"},{"name":"해림","role":"ALL"},{"name":"현지","role":"ALL"},{"name":"혜진","role":"ALL"}];
+var holidayMap = {"2027-01-01":"신정","2027-03-01":"삼일절","2027-05-01":"근로자의 날","2027-05-05":"어린이날","2027-06-06":"현충일","2027-07-17":"제헌절","2027-07-19":"대체공휴일(제헌절)","2027-08-15":"광복절","2027-08-16":"대체공휴일(광복절)","2027-10-03":"개천절","2027-10-04":"대체공휴일(개천절)","2027-10-09":"한글날","2027-10-11":"대체공휴일(한글날)","2027-12-25":"크리스마스","2027-12-27":"대체공휴일(크리스마스)","2027-02-06":"설날 연휴","2027-02-08":"대체공휴일(설날 연휴)","2027-02-07":"설날","2027-02-09":"대체공휴일(설날)","2027-05-13":"부처님오신날","2027-09-14":"추석 연휴","2027-09-15":"추석","2027-09-16":"추석 연휴","2027-10-15":"개원기념일"};
+var userStats = {};
+var previousScheduleData = null;
+
+window.onload = function() {
+    initMemberSelects();
+    fetchDataFromGoogleSheet();
+};
+
+function backupCurrentState() {
+    if (scheduleData && scheduleData.length > 0) {
+        previousScheduleData = JSON.parse(JSON.stringify(scheduleData));
+    }
+}
+
+function initMemberSelects() {
+    var selFilter = document.getElementById("userFilter");
+    var selTarget = document.getElementById("singleTargetMember");
+    var selFrom = document.getElementById("swapFromMember");
+    var selTo = document.getElementById("swapToMember");
+
+    selFilter.innerHTML = '<option value="ALL">전체 보기</option>';
+    if (selTarget) selTarget.innerHTML = '';
+    if (selFrom) selFrom.innerHTML = '';
+    if (selTo) selTo.innerHTML = '';
+
+    members.forEach(function(m){
+        var opt1 = document.createElement("option"); opt1.value = m.name; opt1.innerText = m.name; selFilter.appendChild(opt1);
+        if (selTarget) { var opt2 = document.createElement("option"); opt2.value = m.name; opt2.innerText = m.name; selTarget.appendChild(opt2); }
+        if (selFrom) { var opt3 = document.createElement("option"); opt3.value = m.name; opt3.innerText = m.name; selFrom.appendChild(opt3); }
+        if (selTo) { var opt4 = document.createElement("option"); opt4.value = m.name; opt4.innerText = m.name; selTo.appendChild(opt4); }
+    });
+}
+
+function switchSubTab(mode) {
+    document.getElementById("subTabDate").classList.toggle("active", mode === 'date');
+    document.getElementById("subTabAll").classList.toggle("active", mode === 'all');
+    document.getElementById("swapDateMode").style.display = mode === 'date' ? "block" : "none";
+    document.getElementById("swapAllMode").style.display = mode === 'all' ? "block" : "none";
+}
+
+// 🔥 [속도 최적화] 즉시 반응 후 비동기 구글 시트 저장
+function applySwapSingleUser() {
+    var dateSelect = document.getElementById("swapDateSelect");
+    var roleSelect = document.getElementById("swapRoleSelect");
+    var newWorkerSelect = document.getElementById("singleTargetMember");
+
+    if (!dateSelect || !dateSelect.value) return alert("변경할 날짜를 선택해 주세요.");
+
+    var selectedDate = dateSelect.value;
+    var role = roleSelect.value;
+    var newWorker = newWorkerSelect.value;
+
+    var item = scheduleData.find(function(i){ return i.displayDate === selectedDate; });
+    if (!item || item.isHoliday) return alert("해당 날짜는 근무일이 아닙니다.");
+
+    var currentWorker = (role === 'tuk') ? item.tukWorker : item.pyeWorker;
+    if (currentWorker === newWorker) return alert("기존 근무자와 변경할 인원이 같습니다.");
+
+    var targetMem = members.find(function(m){ return m.name === newWorker; });
+    if (!targetMem) return;
+
+    if (role === 'tuk' && targetMem.role === '폐') return alert(newWorker + " 님은 [폐 전담]이라 특검 근무에 들어갈 수 없습니다.");
+    if (role === 'pye' && targetMem.role === '특') return alert(newWorker + " 님은 [특 전담]이라 폐알혈 근무에 들어갈 수 없습니다.");
+
+    if (role === 'tuk' && item.pyeWorker === newWorker) return alert(newWorker + " 님이 이미 해당 날짜의 폐알혈 근무자로 지정되어 있습니다.");
+    if (role === 'pye' && item.tukWorker === newWorker) return alert(newWorker + " 님이 이미 해당 날짜의 특검 근무자로 지정되어 있습니다.");
+
+    backupCurrentState();
+
+    var swapInfoStr = currentWorker + " → " + newWorker;
+    if (role === 'tuk') {
+        item.tukWorker = newWorker;
+        item.tukSwapInfo = swapInfoStr;
+    } else {
+        item.pyeWorker = newWorker;
+        item.pyeSwapInfo = swapInfoStr;
+    }
+
+    // 1. 화면 즉시 반영
+    refreshAllUI();
+
+    // 2. 백그라운드 구글 시트 저장
+    saveScheduleToGAS(scheduleData);
+
+    // 🔔 3. 변경 완료 팝업 메시지 추가!
+    alert(selectedDate + " " + currentWorker + "님의 근무가 " + newWorker + "님으로 변경되었습니다.");
+}
+
+// 🔥 [속도 최적화] 즉시 반응 후 비동기 구글 시트 저장
+function applySwapAllUser() {
+    var fromMember = document.getElementById("swapFromMember").value;
+    var toMember = document.getElementById("swapToMember").value;
+
+    if (!fromMember || !toMember) return alert("변경할 대상을 모두 선택해 주세요.");
+    if (fromMember === toMember) return alert("서로 다른 인원을 선택해 주세요.");
+
+    if (!confirm("[" + fromMember + "] 님의 모든 근무를 [" + toMember + "] 님으로 변경 하시겠습니까?")) return;
+
+    backupCurrentState();
+
+    var changedCount = 0;
+    scheduleData.forEach(function(item) {
+        if (!item.isHoliday) {
+            if (item.tukWorker === fromMember) { item.tukWorker = toMember; item.tukSwapInfo = fromMember + " → " + toMember; changedCount++; }
+            if (item.pyeWorker === fromMember) { item.pyeWorker = toMember; item.pyeSwapInfo = fromMember + " → " + toMember; changedCount++; }
+        }
+    });
+
+    if (changedCount === 0) return alert("[" + fromMember + "] 님의 예정된 근무를 찾을 수 없습니다.");
+
+    // 1. 화면 즉시 반영
+    refreshAllUI();
+
+    // 2. 백그라운드 구글 시트 저장
+    saveScheduleToGAS(scheduleData);
+
+    // 🔔 3. 일괄 변경 완료 팝업 메시지 복구!
+    alert(fromMember + "님의 근무가 " + toMember + "님으로 일괄 변경되었습니다 (" + changedCount + "건)");
+}
+
+// 🔥 [속도 최적화] 되돌리기도 즉시 실행
+function undoSwapUser() {
+    if (!previousScheduleData) return alert("되돌릴 이전 변경 내역이 없습니다.");
+
+    scheduleData = JSON.parse(JSON.stringify(previousScheduleData));
+    previousScheduleData = null;
+
+    // 1. 화면 즉시 반영
+    refreshAllUI();
+
+    // 2. 백그라운드 구글 시트 저장
+    saveScheduleToGAS(scheduleData);
+}
+
+function saveScheduleToGAS(data) {
+    if (!GAS_WEB_APP_URL) return;
+
+    fetch(GAS_WEB_APP_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({ action: "saveAll", scheduleData: data })
+    })
+    .catch(function(err) {
+        console.error("구글 시트 백그라운드 저장 중 통신 문제 발생", err);
+    });
+}
+
+function refreshAllUI() {
+    recalcStats();
+    renderCalendar();
+    renderList();
+    onSwapDateChange();
+}
+
+function initSwapDateOptions() {
+    var dateSel = document.getElementById("swapDateSelect");
+    dateSel.innerHTML = "";
+    var workItems = scheduleData.filter(function(item){ return !item.isHoliday; });
+    workItems.forEach(function(item){
+        var opt = document.createElement("option");
+        opt.value = item.displayDate;
+        opt.innerText = item.displayDate;
+        dateSel.appendChild(opt);
+    });
+    if(workItems.length > 0) onSwapDateChange();
+}
+
+function fetchDataFromGoogleSheet() {
+    if (!GAS_WEB_APP_URL) return;
+    fetch(GAS_WEB_APP_URL)
+        .then(res => res.json())
+        .then(parsedData => {
+            if (parsedData && parsedData.length > 0) {
+                scheduleData = parsedData;
+                refreshAllUI();
+                initSwapDateOptions();
+            }
+        })
+        .catch(err => console.error("데이터 로드 오류"));
+}
+
+function onSwapDateChange() {
+    var selectedDate = document.getElementById("swapDateSelect").value;
+    var role = document.getElementById("swapRoleSelect").value;
+    var item = scheduleData.find(function(i){ return i.displayDate === selectedDate; });
+    if(item) {
+        var currentWorker = role === 'tuk' ? item.tukWorker : item.pyeWorker;
+        document.getElementById("currentWorkerName").innerText = currentWorker;
+    }
+}
+
+function switchTab(type) {
+    document.getElementById("calView").style.display = type === "cal" ? "block" : "none";
+    document.getElementById("listView").style.display = type === "list" ? "block" : "none";
+    document.getElementById("tabCal").classList.toggle("active", type === "cal");
+    document.getElementById("tabList").classList.toggle("active", type === "list");
+}
+
+function onFilterChange() { renderCalendar(); renderList(); }
+
+function changeMonth(delta) {
+    currentMonth += delta;
+    if(currentMonth < 0) currentMonth = 0;
+    if(currentMonth > 11) currentMonth = 11;
+    renderCalendar();
+}
+
+function renderCalendar() {
+    document.getElementById("calMonthTitle").innerText = targetYear + "년 " + (currentMonth + 1) + "월";
+    var grid = document.getElementById("calGrid");
+    grid.innerHTML = "";
+    var days = ["일", "월", "화", "수", "목", "금", "토"];
+    days.forEach(function(d){ grid.innerHTML += "<div class='cal-day-header'>" + d + "</div>"; });
+    
+    var firstDay = new Date(targetYear, currentMonth, 1).getDay();
+    var lastDate = new Date(targetYear, currentMonth + 1, 0).getDate();
+    var prevLastDate = new Date(targetYear, currentMonth, 0).getDate();
+    var selectedMember = document.getElementById("userFilter").value;
+    
+    var now = new Date();
+    var isTodayYear = (targetYear === now.getFullYear() && currentMonth === now.getMonth());
+
+    for(var i = firstDay - 1; i >= 0; i--) {
+        grid.innerHTML += "<div class='cal-cell other-month'><span class='cal-date-num'>" + (prevLastDate - i) + "</span></div>";
+    }
+    
+    for(var d = 1; d <= lastDate; d++) {
+        var monthStr = String(currentMonth + 1).padStart(2, "0");
+        var dayStr = String(d).padStart(2, "0");
+        var fullDateKey = targetYear + "-" + monthStr + "-" + dayStr;
+        var shortDateKey = monthStr + "-" + dayStr;
+        var dayOfWeek = new Date(targetYear, currentMonth, d).getDay();
+        
+        var cellClass = "cal-cell";
+        if(dayOfWeek === 6) cellClass += " sat";
+        if(dayOfWeek === 0) cellClass += " sun";
+        
+        var isToday = (isTodayYear && d === now.getDate());
+        if(isToday) cellClass += " today";
+
+        var holidayName = holidayMap[fullDateKey];
+        if(holidayName) cellClass += " holiday";
+        
+        var matchingItem = scheduleData.find(function(item){ return item.displayDate.startsWith(shortDateKey); });
+        var badgeHtml = "";
+        
+        if(holidayName) {
+            badgeHtml = "<div class='cal-badge bg-holiday'>" + holidayName + "</div>";
+        } else if(matchingItem && !matchingItem.isHoliday) {
+            var isSwapped = !!(matchingItem.tukSwapInfo || matchingItem.pyeSwapInfo);
+            var isMyWork = (selectedMember !== "ALL" && (matchingItem.tukWorker === selectedMember || matchingItem.pyeWorker === selectedMember));
+            var badgeStyle = isSwapped ? "bg-swapped" : (isMyWork ? "bg-mywork" : "bg-work-clean");
+            
+            badgeHtml = "<div class='cal-badge " + badgeStyle + "'>특: " + matchingItem.tukWorker + "<br>폐: " + matchingItem.pyeWorker + "</div>";
+        }
+        
+        var todayLabel = isToday ? "<span class='today-badge'>오늘</span>" : "";
+        grid.innerHTML += "<div class='" + cellClass + "'>" + todayLabel + "<span class='cal-date-num'>" + d + "</span>" + badgeHtml + "</div>";
+    }
+    
+    var totalCells = firstDay + lastDate;
+    var nextDays = (7 - (totalCells % 7)) % 7;
+    for(var n = 1; n <= nextDays; n++) {
+        grid.innerHTML += "<div class='cal-cell other-month'><span class='cal-date-num'>" + n + "</span></div>";
+    }
+}
+
+function renderList() {
+    var val = document.getElementById("userFilter").value;
+    var tbody = document.getElementById("tblBody");
+    tbody.innerHTML = "";
+    var list = val === "ALL" ? scheduleData : scheduleData.filter(function(i){ return !i.isHoliday && (i.tukWorker === val || i.pyeWorker === val); });
+    
+    list.forEach(function(item) {
+        var tr = document.createElement("tr");
+        if(item.isHoliday) {
+            tr.className = "holiday-row";
+            tr.innerHTML = "<td>" + item.displayDate + "</td><td colspan='2'>" + item.holidayName + "</td><td>휴무</td>";
+        } else {
+            var tukStr = item.tukSwapInfo ? "<span class='swapped-name'>" + item.tukWorker + "</span>" : (item.tukWorker === val ? "<mark>" + item.tukWorker + "</mark>" : item.tukWorker);
+            var pyeStr = item.pyeSwapInfo ? "<span class='swapped-name'>" + item.pyeWorker + "</span>" : (item.pyeWorker === val ? "<mark>" + item.pyeWorker + "</mark>" : item.pyeWorker);
+            
+            var noteParts = [];
+            if(item.isSandwich) noteParts.push("🥪");
+            
+            var swaps = [];
+            if(item.tukSwapInfo) swaps.push(item.tukSwapInfo);
+            if(item.pyeSwapInfo) swaps.push(item.pyeSwapInfo);
+            
+            if(swaps.length > 0) noteParts.push("<span class='swap-info-badge'>" + swaps.join(" / ") + "</span>");
+            var noteStr = noteParts.length > 0 ? noteParts.join(" ") : "-";
+
+            tr.innerHTML = "<td>" + item.displayDate + "</td><td><b>" + tukStr + "</b></td><td><b>" + pyeStr + "</b></td><td>" + noteStr + "</td>";
+        }
+        tbody.appendChild(tr);
+    });
+}
+
+function recalcStats() {
+    userStats = {};
+    members.forEach(function(m){ userStats[m.name] = { total: 0, tuk: 0, pye: 0, sandwich: 0 }; });
+    scheduleData.forEach(function(item){
+        if(!item.isHoliday) {
+            if(userStats[item.tukWorker]) { userStats[item.tukWorker].total++; userStats[item.tukWorker].tuk++; if(item.isSandwich) userStats[item.tukWorker].sandwich++; }
+            if(userStats[item.pyeWorker]) { userStats[item.pyeWorker].total++; userStats[item.pyeWorker].pye++; if(item.isSandwich) userStats[item.pyeWorker].sandwich++; }
+        }
+    });
+    renderStats();
+}
+
+function renderStats() {
+    var html = "<table><thead><tr><th>이름</th><th>총 근무</th><th>특검</th><th>폐알혈</th><th>샌드위치</th></tr></thead><tbody>";
+    members.forEach(function(m){
+        var st = userStats[m.name] || { total: 0, tuk: 0, pye: 0, sandwich: 0 };
+        html += "<tr><td><b>" + m.name + "</b></td><td><span style='color:var(--primary); font-weight:bold;'>" + st.total + "회</span></td><td>" + st.tuk + "회</td><td>" + st.pye + "회</td><td>" + st.sandwich + "회</td></tr>";
+    });
+    html += "</tbody></table>";
+    document.getElementById("userStatsUI").innerHTML = html;
+}
+</script>
+</body>
+</html>
