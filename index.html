@@ -4,112 +4,118 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>2027년 토요일 근무 스케줄</title>
+<script src="https://unpkg.com/lucide@latest"></script>
 <style>
 :root { 
-    --primary: #3b82f6; --primary-hover: #2563eb; --bg: #f8fafc; --card: #ffffff; 
-    --text-main: #0f172a; --text-muted: #64748b; --border: #cbd5e1; --sat: #1d4ed8; 
-    --sat-bg: #eff6ff; --sun: #dc2626; --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --primary: #6366f1; --primary-hover: #4f46e5; --bg: #f8fafc; --card: #ffffff; 
+    --text-main: #1e293b; --text-muted: #64748b; --border: #cbd5e1; --sat: #4338ca; 
+    --sat-bg: #eef2ff; --sun: #e11d48; --shadow-sm: 0 4px 12px -2px rgba(99, 102, 241, 0.05);
     --warning: #f59e0b; --warning-bg: #fffbebfb;
 }
 * { box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: var(--bg); color: var(--text-main); margin: 0; padding: 12px 8px; line-height: 1.4; }
 .container { max-width: 900px; margin: 0 auto; }
 .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-.top-header h1 { font-size: 1.25rem; color: var(--text-main); margin: 0; font-weight: 700; }
-.info-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 4px 8px; border-radius: 6px; transition: background 0.2s; }
-.info-btn:hover { background-color: rgba(0, 0, 0, 0.05); }
-.card { background: var(--card); border-radius: 10px; padding: 12px; box-shadow: var(--shadow-sm); margin-bottom: 12px; border: 1px solid var(--border); }
-.compact-select { padding: 9px 10px; border: 1px solid var(--border); border-radius: 6px; font-size: 0.875rem; background-color: #fff; color: var(--text-main); height: 42px; min-height: 42px; }
+.top-header h1 { font-size: 1.25rem; color: var(--text-main); margin: 0; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+.info-btn { background: none; border: none; font-size: 1.2rem; cursor: pointer; padding: 4px 8px; border-radius: 8px; transition: background 0.2s; color: var(--text-muted); display: inline-flex; align-items: center; }
+.info-btn:hover { background-color: rgba(99, 102, 241, 0.08); color: var(--primary); }
+.card { background: var(--card); border-radius: 14px; padding: 14px; box-shadow: var(--shadow-sm); margin-bottom: 12px; border: 1px solid var(--border); }
+.compact-select { padding: 9px 10px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.875rem; background-color: #fff; color: var(--text-main); height: 42px; min-height: 42px; }
 
-.btn { background-color: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.875rem; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.btn { background-color: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.875rem; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: background 0.15s ease; }
 .btn:hover { background-color: var(--primary-hover); }
-.btn-success { background-color: #10b981; color: white; border: none; padding: 12px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 0.95rem; width: 100%; min-height: 46px; display: inline-flex; align-items: center; justify-content: center; }
+.btn-success { background-color: #10b981; color: white; border: none; padding: 12px 14px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 0.95rem; width: 100%; min-height: 46px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; transition: background 0.15s ease; }
 .btn-success:hover { background-color: #059669; }
-.btn-warning { background-color: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 10px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.875rem; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.btn-warning { background-color: #f1f5f9; color: #475569; border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.875rem; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
 .btn-warning:hover { background-color: #e2e8f0; }
-.btn-outline { background: #fff; color: var(--text-main); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; font-weight: 600; min-height: 38px; }
+.btn-outline { background: #fff; color: var(--text-main); border: 1px solid var(--border); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; min-height: 38px; display: inline-flex; align-items: center; justify-content: center; gap: 4px; }
 
-.tab-container { display: flex; gap: 4px; margin-bottom: 12px; background: #e2e8f0; padding: 3px; border-radius: 8px; }
-.tab-btn { flex: 1; padding: 8px 4px; text-align: center; border-radius: 6px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: var(--text-muted); }
+.tab-container { display: flex; gap: 4px; margin-bottom: 12px; background: #e2e8f0; padding: 3px; border-radius: 10px; }
+.tab-btn { flex: 1; padding: 8px 4px; text-align: center; border-radius: 8px; font-weight: 600; font-size: 0.85rem; cursor: pointer; color: var(--text-muted); display: inline-flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.15s ease; }
 .tab-btn.active { background: #ffffff; color: var(--primary); box-shadow: var(--shadow-sm); }
 .cal-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-weight: 700; font-size: 1rem; }
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
 .cal-day-header { background: #f1f5f9; padding: 6px 1px; text-align: center; font-size: 0.725rem; font-weight: 700; color: var(--text-muted); }
 .cal-day-header:nth-child(1) { color: var(--sun); }
-.cal-day-header:nth-child(7) { color: var(--sat); background: #e0f2fe; }
+.cal-day-header:nth-child(7) { color: var(--sat); background: #e0e7ff; }
 .cal-cell { background: white; min-height: 58px; padding: 2px 1px; display: flex; flex-direction: column; justify-content: flex-start; position: relative; overflow: hidden; }
 .cal-cell.sat { background-color: var(--sat-bg); }
 .cal-cell.other-month { background: #f8fafc; opacity: 0.4; }
 .cal-date-num { font-weight: 700; font-size: 0.75rem; color: var(--text-main); padding-left: 2px; }
 .cal-cell.sat .cal-date-num { color: var(--sat); }
 .cal-cell.sun .cal-date-num, .cal-cell.holiday .cal-date-num { color: var(--sun); }
-.cal-cell.today { background-color: #fef9c3 !important; border: 2px solid #eab308 !important; }
+.cal-cell.today { background-color: #fef9c3 !important; border: 2px solid #fde047 !important; }
 .cal-cell.today .cal-date-num { color: #854d0e !important; font-weight: 900; }
-.today-badge { position: absolute; top: 1px; right: 1px; font-size: 0.5rem; background: #eab308; color: white; padding: 0px 2px; border-radius: 2px; font-weight: 600; }
+.today-badge { position: absolute; top: 1px; right: 1px; font-size: 0.5rem; background: #eab308; color: white; padding: 0px 3px; border-radius: 3px; font-weight: 600; }
 .cal-badge { padding: 0; margin-top: 1px; text-align: center; width: 100%; box-sizing: border-box; font-size: 0.68rem; line-height: 1.2; word-break: break-all; }
-.bg-work-clean { color: #0f172a; font-weight: 600; }
-.bg-mywork { background: #fef08a; color: #854d0e; font-weight: 800; border-radius: 3px; padding: 1px 0; }
-.bg-swapped { background: #dcfce7; color: #166534; font-weight: 800; border-radius: 3px; padding: 1px 0; }
-.bg-modified { background: #fef3c7; color: #92400e; font-weight: 800; border-radius: 3px; padding: 1px 0; border: 1px dashed #f59e0b; }
-.bg-holiday { color: #dc2626; font-weight: 700; font-size: 0.6rem; }
-table { width: 100%; border-collapse: separate; border-spacing: 0; background: white; font-size: 0.825rem; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+.bg-work-clean { color: #1e293b; font-weight: 600; }
+.bg-mywork { background: #fef08a; color: #854d0e; font-weight: 800; border-radius: 4px; padding: 1px 0; }
+.bg-swapped { background: #dcfce7; color: #166534; font-weight: 800; border-radius: 4px; padding: 1px 0; }
+.bg-modified { background: #fef3c7; color: #92400e; font-weight: 800; border-radius: 4px; padding: 1px 0; border: 1px dashed #f59e0b; }
+.bg-holiday { color: #e11d48; font-weight: 700; font-size: 0.6rem; }
+table { width: 100%; border-collapse: separate; border-spacing: 0; background: white; font-size: 0.825rem; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
 th, td { border-bottom: 1px solid var(--border); border-right: 1px solid var(--border); padding: 8px 6px; text-align: center; vertical-align: middle; }
 th:last-child, td:last-child { border-right: none; }
 tr:last-child td { border-bottom: none; }
 th { background-color: #f1f5f9; color: var(--text-muted); font-weight: 600; }
-.holiday-row { background-color: #fef2f2; color: #dc2626; font-weight: 600; }
+.holiday-row { background-color: #fff1f2; color: #e11d48; font-weight: 600; }
 .modified-row { background-color: #fffbe0 !important; }
-mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radius: 3px; }
-.swapped-name { background-color: #dcfce7; color: #166534; padding: 2px 4px; border-radius: 3px; border: 1px solid #bbf7d0; }
+mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radius: 4px; }
+.swapped-name { background-color: #dcfce7; color: #166534; padding: 2px 4px; border-radius: 4px; border: 1px solid #bbf7d0; }
 .modified-badge { font-size: 0.72rem; background: #f59e0b; color: white; padding: 1px 5px; border-radius: 4px; font-weight: bold; margin-left: 4px; }
 .swap-info-badge { font-size: 0.75rem; color: #166534; font-weight: 600; }
 .sub-tabs { display: flex; gap: 6px; margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
-.sub-tab-btn { background: none; border: none; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding: 6px 10px; border-radius: 4px; min-height: 36px; }
-.sub-tab-btn.active { background: #eff6ff; color: var(--primary); }
+.sub-tab-btn { background: none; border: none; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); cursor: pointer; padding: 6px 10px; border-radius: 6px; min-height: 36px; display: inline-flex; align-items: center; gap: 4px; }
+.sub-tab-btn.active { background: #eef2ff; color: var(--primary); }
 
 .btn-group-row { display: flex; gap: 8px; width: 100%; margin-top: 10px; }
 .btn-group-row .btn, .btn-group-row .btn-warning { flex: 1; width: 50%; }
 
-.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-.modal-content { background-color: #fff; padding: 20px; border-radius: 12px; width: 90%; max-width: 440px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.4); display: flex; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(2px); }
+.modal-content { background-color: #fff; padding: 20px; border-radius: 16px; width: 90%; max-width: 440px; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); }
 .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
-.modal-header h3 { margin: 0; font-size: 1.1rem; color: #333; }
+.modal-header h3 { margin: 0; font-size: 1.1rem; color: #333; display: flex; align-items: center; gap: 6px; }
 .close-btn { font-size: 1.4rem; cursor: pointer; color: #888; }
 .modal-body ul { padding-left: 18px; margin: 0; line-height: 1.6; font-size: 0.88rem; color: #444; }
 .modal-body li { margin-bottom: 8px; }
 .modal-divider { border: 0; border-top: 1px dashed #e0e0e0; margin: 15px 0; }
-.badge-guide { display: flex; align-items: center; gap: 6px; background-color: #f8f9fa; padding: 10px 12px; border-radius: 8px; font-size: 0.8rem; flex-wrap: wrap; }
-.badge-title { font-weight: bold; color: #333; width: 100%; margin-bottom: 4px; }
+.badge-guide { display: flex; align-items: center; gap: 6px; background-color: #f8fafc; padding: 10px 12px; border-radius: 10px; font-size: 0.8rem; flex-wrap: wrap; }
+.badge-title { font-weight: bold; color: #333; width: 100%; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
 .guide-badge { padding: 3px 8px; border-radius: 4px; font-size: 0.78rem; font-weight: bold; }
 .guide-badge.my-work { background-color: #fef08a; color: #854d0e; border: 1px solid #fde047; }
 .guide-badge.swap-work { background-color: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
 .guide-badge.mod-work { background-color: #fef3c7; color: #92400e; border: 1px dashed #f59e0b; }
 .modal-footer { text-align: right; margin-top: 15px; }
-.modal-footer button { background-color: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.modal-footer button { background-color: var(--primary); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+
+.icon { width: 18px; height: 18px; stroke-width: 2; vertical-align: middle; }
+.icon-sm { width: 14px; height: 14px; stroke-width: 2; vertical-align: middle; }
 </style>
 </head>
 <body>
 <div class="container">
     <div class="top-header">
-        <h1>📆 2027년 토요일 근무 (사용자용)</h1>
-        <button type="button" class="info-btn" onclick="openInfoModal()" title="이용안내">💡</button>
+        <h1><i data-lucide="calendar" class="icon" style="color:var(--primary);"></i> 2027년 토요일 근무 (사용자용)</h1>
+        <button type="button" class="info-btn" onclick="openInfoModal()" title="이용안내"><i data-lucide="lightbulb" class="icon"></i></button>
     </div>
 
     <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="font-weight:700; font-size:0.875rem;">👤 근무자 선택:</div>
+            <div style="font-weight:700; font-size:0.875rem; display:flex; align-items:center; gap:4px;">
+                <i data-lucide="user" class="icon-sm"></i> 근무자 선택:
+            </div>
             <select id="userFilter" class="compact-select" onchange="onFilterChange()" style="width: 140px;"><option value="ALL">전체 보기</option></select>
         </div>
     </div>
     <div class="tab-container">
-        <div class="tab-btn active" id="tabCal" onclick="switchTab('cal')">📅 캘린더 보기</div>
-        <div class="tab-btn" id="tabList" onclick="switchTab('list')">📋 상세 근무표</div>
+        <div class="tab-btn active" id="tabCal" onclick="switchTab('cal')"><i data-lucide="calendar-days" class="icon-sm"></i> 캘린더 보기</div>
+        <div class="tab-btn" id="tabList" onclick="switchTab('list')"><i data-lucide="clipboard-list" class="icon-sm"></i> 상세 근무표</div>
     </div>
     <div id="calView" class="card">
         <div class="cal-nav">
-            <button class="btn-outline" onclick="changeMonth(-1)">◀ 이전달</button>
+            <button class="btn-outline" onclick="changeMonth(-1)"><i data-lucide="chevron-left" class="icon-sm"></i> 이전달</button>
             <span id="calMonthTitle">2027년 1월</span>
-            <button class="btn-outline" onclick="changeMonth(1)">다음달 ▶</button>
+            <button class="btn-outline" onclick="changeMonth(1)">다음달 <i data-lucide="chevron-right" class="icon-sm"></i></button>
         </div>
         <div class="cal-grid" id="calGrid"></div>
     </div>
@@ -122,30 +128,32 @@ mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radiu
         </div>
     </div>
 
-    <div class="card" style="border: 2px solid #bfdbfe; background-color: #f0f9ff;">
-        <h2 style="font-size:0.95rem; color:var(--text-main); margin:0 0 10px 0;">🔄 근무 변경 (임시 수정)</h2>
+    <div class="card" style="border: 1px solid #c7d2fe; background-color: #f5f3ff;">
+        <h2 style="font-size:0.95rem; color:var(--text-main); margin:0 0 10px 0; display:flex; align-items:center; gap:4px;">
+            <i data-lucide="refresh-cw" class="icon-sm" style="color:var(--primary);"></i> 근무 변경
+        </h2>
         <div class="sub-tabs">
-            <button class="sub-tab-btn active" id="subTabDate" onclick="switchSubTab('date')">📌 특정 날짜 변경</button>
-            <button class="sub-tab-btn" id="subTabAll" onclick="switchSubTab('all')">👥 전체 일괄 변경</button>
+            <button class="sub-tab-btn active" id="subTabDate" onclick="switchSubTab('date')"><i data-lucide="pin" class="icon-sm"></i> 특정 날짜 변경</button>
+            <button class="sub-tab-btn" id="subTabAll" onclick="switchSubTab('all')"><i data-lucide="users" class="icon-sm"></i> 전체 일괄 변경</button>
         </div>
 
         <div id="swapDateMode">
             <div style="display:flex; flex-direction:column; gap:8px;">
                 <div style="display:flex; gap:6px; align-items:center;">
-                    <span style="font-size:0.825rem; font-weight:600; width:60px;">📅 날짜</span>
+                    <span style="font-size:0.825rem; font-weight:600; width:60px; display:inline-flex; align-items:center; gap:2px;"><i data-lucide="calendar" class="icon-sm"></i> 날짜</span>
                     <select id="swapDateSelect" class="compact-select" style="flex:1;" onchange="onSwapDateChange()"></select>
                 </div>
                 <div style="display:flex; gap:6px; align-items:center;">
-                    <span style="font-size:0.825rem; font-weight:600; width:60px;">📌 구분</span>
+                    <span style="font-size:0.825rem; font-weight:600; width:60px; display:inline-flex; align-items:center; gap:2px;"><i data-lucide="tag" class="icon-sm"></i> 구분</span>
                     <select id="swapRoleSelect" class="compact-select" style="flex:1;" onchange="onSwapDateChange()">
                         <option value="tuk">특검 근무자</option>
                         <option value="pye">폐알혈 근무자</option>
                     </select>
                 </div>
                 <div style="display:flex; gap:6px; align-items:center;">
-                    <span style="font-size:0.825rem; font-weight:600; width:60px;">👤 변경</span>
+                    <span style="font-size:0.825rem; font-weight:600; width:60px; display:inline-flex; align-items:center; gap:2px;"><i data-lucide="user-check" class="icon-sm"></i> 변경</span>
                     <span id="currentWorkerName" style="font-size:0.85rem; font-weight:700; color:var(--primary); min-width:45px;">-</span>
-                    <span style="color:var(--text-muted); margin: 0 2px;">➔</span>
+                    <span style="color:var(--text-muted); margin: 0 2px;"><i data-lucide="arrow-right" class="icon-sm"></i></span>
                     <select id="singleTargetMember" class="compact-select" style="flex:1;"></select>
                 </div>
                 
@@ -160,7 +168,7 @@ mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radiu
             <div style="display:flex; flex-direction:column; gap:8px;">
                 <div style="display:flex; gap:6px; align-items:center;">
                     <select id="swapFromMember" class="compact-select" style="flex:1;"></select>
-                    <span style="color:var(--text-muted);">➔</span>
+                    <span style="color:var(--text-muted);"><i data-lucide="arrow-right" class="icon-sm"></i></span>
                     <select id="swapToMember" class="compact-select" style="flex:1;"></select>
                 </div>
                 <div class="btn-group-row">
@@ -171,12 +179,14 @@ mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radiu
         </div>
 
         <div id="saveControlPanel" style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed #cbd5e1;">
-            <button class="btn-success" onclick="saveAllChangesToServer()">💾 변경사항 저장 (서버 전송)</button>
+            <button class="btn-success" onclick="saveAllChangesToServer()"><i data-lucide="save" class="icon"></i> 변경사항 저장 (서버 전송)</button>
         </div>
     </div>
 
     <div class="card">
-        <h2 style="font-size:0.95rem; color:var(--text-main); margin:0 0 10px 0;">📊 근무 통계</h2>
+        <h2 style="font-size:0.95rem; color:var(--text-main); margin:0 0 10px 0; display:flex; align-items:center; gap:4px;">
+            <i data-lucide="bar-chart-2" class="icon-sm"></i> 근무 통계
+        </h2>
         <div id="userStatsUI" style="overflow-x: auto;"></div>
     </div>
 </div>
@@ -184,7 +194,7 @@ mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radiu
 <div id="infoModal" class="modal-overlay" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>💡 이용 안내</h3>
+            <h3><i data-lucide="lightbulb" class="icon" style="color:var(--primary);"></i> 이용 안내</h3>
             <span class="close-btn" onclick="closeInfoModal()">&times;</span>
         </div>
         <div class="modal-body">
@@ -199,7 +209,7 @@ mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radiu
             <hr class="modal-divider">
 
             <div class="badge-guide">
-                <span class="badge-title">🟢 배지 색상 안내:</span>
+                <span class="badge-title"><i data-lucide="check-circle-2" class="icon-sm" style="color:#166534;"></i> 배지 색상 안내:</span>
                 <span class="guide-badge my-work">내 근무</span>
                 <span class="guide-badge swap-work">대체 근무</span>
                 <span class="guide-badge mod-work">수정됨 (미저장)</span>
@@ -215,7 +225,7 @@ mark { background-color: #fef08a; color: #854d0e; padding: 2px 4px; border-radiu
 var GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwmjVNFw_k-jLTaDOwZypqSXR_11D16QQrRUO9c4IR7MkYvf7Kz-S4szhVEyO5XR8LY/exec";
 var targetYear = 2027;
 var currentMonth = 0;
-var originalScheduleData = JSON.parse('[{"id":0,"displayDate":"01-02 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"보연","isSandwich":true},{"id":1,"displayDate":"01-09 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"해림","isSandwich":false},{"id":2,"displayDate":"01-16 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"현지","isSandwich":false},{"id":3,"displayDate":"01-23 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"미선","isSandwich":false},{"id":4,"displayDate":"01-30 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미정","isSandwich":false},{"id":5,"displayDate":"02-06 (토)","isHoliday":true,"holidayName":"설날 연휴","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":6,"displayDate":"02-13 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"한오","isSandwich":false},{"id":7,"displayDate":"02-20 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"지영","isSandwich":false},{"id":8,"displayDate":"02-27 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"혜진","isSandwich":true},{"id":9,"displayDate":"03-06 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"미선","isSandwich":false},{"id":10,"displayDate":"03-13 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"한오","isSandwich":false},{"id":11,"displayDate":"03-20 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"지영","isSandwich":false},{"id":12,"displayDate":"03-27 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"현지","isSandwich":false},{"id":13,"displayDate":"04-03 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미선","isSandwich":false},{"id":14,"displayDate":"04-10 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"소현","isSandwich":false},{"id":15,"displayDate":"04-17 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"미정","isSandwich":false},{"id":16,"displayDate":"04-24 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"보연","isSandwich":false},{"id":17,"displayDate":"05-01 (토)","isHoliday":true,"holidayName":"근로자의 날","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":18,"displayDate":"05-08 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"혜진","isSandwich":false},{"id":19,"displayDate":"05-15 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"소현","isSandwich":true},{"id":20,"displayDate":"05-22 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"현지","isSandwich":false},{"id":21,"displayDate":"05-29 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"보연","isSandwich":false},{"id":22,"displayDate":"06-05 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"해림","isSandwich":false},{"id":23,"displayDate":"06-12 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"지영","isSandwich":false},{"id":24,"displayDate":"06-19 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"한오","isSandwich":false},{"id":25,"displayDate":"06-26 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"미정","isSandwich":false},{"id":26,"displayDate":"07-03 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"해림","isSandwich":false},{"id":27,"displayDate":"07-10 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"미선","isSandwich":false},{"id":28,"displayDate":"07-17 (토)","isHoliday":true,"holidayName":"제헌절","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":29,"displayDate":"07-24 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"현지","isSandwich":false},{"id":30,"displayDate":"07-31 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"한오","isSandwich":false},{"id":31,"displayDate":"08-07 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"소현","isSandwich":false},{"id":32,"displayDate":"08-14 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"혜진","isSandwich":true},{"id":33,"displayDate":"08-21 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"지영","isSandwich":false},{"id":34,"displayDate":"08-28 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"보연","isSandwich":false},{"id":35,"displayDate":"09-04 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"소현","isSandwich":false},{"id":36,"displayDate":"09-11 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"미선","isSandwich":true},{"id":37,"displayDate":"09-18 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"현지","isSandwich":true},{"id":38,"displayDate":"09-25 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"혜진","isSandwich":false},{"id":39,"displayDate":"10-02 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"해림","isSandwich":true},{"id":40,"displayDate":"10-09 (토)","isHoliday":true,"holidayName":"한글날","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":41,"displayDate":"10-16 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"한오","isSandwich":true},{"id":42,"displayDate":"10-23 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미정","isSandwich":false},{"id":43,"displayDate":"10-30 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"지영","isSandwich":false},{"id":44,"displayDate":"11-06 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"해림","isSandwich":false},{"id":45,"displayDate":"11-13 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"미선","isSandwich":false},{"id":46,"displayDate":"11-20 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미정","isSandwich":false},{"id":47,"displayDate":"11-27 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"지영","isSandwich":false},{"id":48,"displayDate":"12-04 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"보연","isSandwich":false},{"id":49,"displayDate":"12-11 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"소현","isSandwich":false},{"id":50,"displayDate":"12-18 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"혜진","isSandwich":false},{"id":51,"displayDate":"12-25 (토)","isHoliday":true,"holidayName":"크리스마스","tukWorker":"","pyeWorker":"","isSandwich":false}]');
+var originalScheduleData = JSON.parse('[{"id":0,"displayDate":"01-02 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"한오","isSandwich":true},{"id":1,"displayDate":"01-09 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"소현","isSandwich":false},{"id":2,"displayDate":"01-16 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"지영","isSandwich":false},{"id":3,"displayDate":"01-23 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"미선","isSandwich":false},{"id":4,"displayDate":"01-30 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"보연","isSandwich":false},{"id":5,"displayDate":"02-06 (토)","isHoliday":true,"holidayName":"설날 연휴","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":6,"displayDate":"02-13 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"해림","isSandwich":false},{"id":7,"displayDate":"02-20 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"미정","isSandwich":false},{"id":8,"displayDate":"02-27 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"현지","isSandwich":true},{"id":9,"displayDate":"03-06 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미선","isSandwich":false},{"id":10,"displayDate":"03-13 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"지영","isSandwich":false},{"id":11,"displayDate":"03-20 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"해림","isSandwich":false},{"id":12,"displayDate":"03-27 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"보연","isSandwich":false},{"id":13,"displayDate":"04-03 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"혜진","isSandwich":false},{"id":14,"displayDate":"04-10 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"한오","isSandwich":false},{"id":15,"displayDate":"04-17 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"소현","isSandwich":false},{"id":16,"displayDate":"04-24 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"미정","isSandwich":false},{"id":17,"displayDate":"05-01 (토)","isHoliday":true,"holidayName":"근로자의 날","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":18,"displayDate":"05-08 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"현지","isSandwich":false},{"id":19,"displayDate":"05-15 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"미선","isSandwich":true},{"id":20,"displayDate":"05-22 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"보연","isSandwich":false},{"id":21,"displayDate":"05-29 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"한오","isSandwich":false},{"id":22,"displayDate":"06-05 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"혜진","isSandwich":false},{"id":23,"displayDate":"06-12 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"지영","isSandwich":false},{"id":24,"displayDate":"06-19 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"해림","isSandwich":false},{"id":25,"displayDate":"06-26 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"소현","isSandwich":false},{"id":26,"displayDate":"07-03 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"혜진","isSandwich":false},{"id":27,"displayDate":"07-10 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"미선","isSandwich":false},{"id":28,"displayDate":"07-17 (토)","isHoliday":true,"holidayName":"제헌절","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":29,"displayDate":"07-24 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"지영","isSandwich":false},{"id":30,"displayDate":"07-31 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"해림","isSandwich":false},{"id":31,"displayDate":"08-07 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"현지","isSandwich":false},{"id":32,"displayDate":"08-14 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미정","isSandwich":true},{"id":33,"displayDate":"08-21 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"보연","isSandwich":false},{"id":34,"displayDate":"08-28 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"한오","isSandwich":false},{"id":35,"displayDate":"09-04 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"소현","isSandwich":false},{"id":36,"displayDate":"09-11 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"혜진","isSandwich":true},{"id":37,"displayDate":"09-18 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"보연","isSandwich":true},{"id":38,"displayDate":"09-25 (토)","isHoliday":false,"holidayName":"","tukWorker":"해림","pyeWorker":"미선","isSandwich":false},{"id":39,"displayDate":"10-02 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"현지","isSandwich":true},{"id":40,"displayDate":"10-09 (토)","isHoliday":true,"holidayName":"한글날","tukWorker":"","pyeWorker":"","isSandwich":false},{"id":41,"displayDate":"10-16 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"해림","isSandwich":true},{"id":42,"displayDate":"10-23 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미정","isSandwich":false},{"id":43,"displayDate":"10-30 (토)","isHoliday":false,"holidayName":"","tukWorker":"보연","pyeWorker":"지영","isSandwich":false},{"id":44,"displayDate":"11-06 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"현지","isSandwich":false},{"id":45,"displayDate":"11-13 (토)","isHoliday":false,"holidayName":"","tukWorker":"한오","pyeWorker":"미선","isSandwich":false},{"id":46,"displayDate":"11-20 (토)","isHoliday":false,"holidayName":"","tukWorker":"미정","pyeWorker":"혜진","isSandwich":false},{"id":47,"displayDate":"11-27 (토)","isHoliday":false,"holidayName":"","tukWorker":"지영","pyeWorker":"해림","isSandwich":false},{"id":48,"displayDate":"12-04 (토)","isHoliday":false,"holidayName":"","tukWorker":"현지","pyeWorker":"보연","isSandwich":false},{"id":49,"displayDate":"12-11 (토)","isHoliday":false,"holidayName":"","tukWorker":"소현","pyeWorker":"한오","isSandwich":false},{"id":50,"displayDate":"12-18 (토)","isHoliday":false,"holidayName":"","tukWorker":"혜진","pyeWorker":"미정","isSandwich":false},{"id":51,"displayDate":"12-25 (토)","isHoliday":true,"holidayName":"크리스마스","tukWorker":"","pyeWorker":"","isSandwich":false}]');
 var tempScheduleData = [];
 var members = JSON.parse('[{"name":"미선","role":"폐"},{"name":"미정","role":"ALL"},{"name":"보연","role":"ALL"},{"name":"소현","role":"ALL"},{"name":"지영","role":"ALL"},{"name":"한오","role":"ALL"},{"name":"해림","role":"ALL"},{"name":"현지","role":"ALL"},{"name":"혜진","role":"ALL"}]');
 var holidayMap = JSON.parse('{"2027-01-01":"신정","2027-03-01":"삼일절","2027-05-01":"근로자의 날","2027-05-05":"어린이날","2027-06-06":"현충일","2027-07-17":"제헌절","2027-07-19":"대체공휴일(제헌절)","2027-08-15":"광복절","2027-08-16":"대체공휴일(광복절)","2027-10-03":"개천절","2027-10-04":"대체공휴일(개천절)","2027-10-09":"한글날","2027-10-11":"대체공휴일(한글날)","2027-12-25":"크리스마스","2027-12-27":"대체공휴일(크리스마스)","2027-02-06":"설날 연휴","2027-02-08":"대체공휴일(설날 연휴)","2027-02-07":"설날","2027-02-09":"대체공휴일(설날)","2027-05-13":"부처님오신날","2027-09-14":"추석 연휴","2027-09-15":"추석","2027-09-16":"추석 연휴","2027-10-15":"개원기념일"}');
@@ -223,7 +233,8 @@ var userStats = {};
 
 window.onload = function() {
     initMemberSelects();
-    fetchDataFromGoogleSheet(); // 접속 시 구글 시트의 최신 데이터를 먼저 불러옴
+    fetchDataFromGoogleSheet();
+    lucide.createIcons();
 };
 
 function openInfoModal() {
@@ -306,7 +317,7 @@ function applyTempSwapSingle() {
     item.isModified = true;
 
     refreshAllUI();
-    alert(selectedDate + " 근무가 임시 저장되었습니다.\n하단의 [💾 변경사항 저장] 버튼을 눌러 최종 적용해 주세요.");
+    alert(selectedDate + " 근무가 임시 저장되었습니다.\n하단의 [변경사항 저장] 버튼을 눌러 최종 적용해 주세요.");
 }
 
 function applyTempSwapAll() {
@@ -329,10 +340,9 @@ function applyTempSwapAll() {
     if (changedCount === 0) return alert("[" + fromMember + "] 님의 예정된 근무를 찾을 수 없습니다.");
 
     refreshAllUI();
-    alert("[" + fromMember + "] ➔ [" + toMember + "] 총 " + changedCount + "건이 임시 저장되었습니다.\n하단의 [💾 변경사항 저장] 버튼을 눌러 저장해 주세요.");
+    alert("[" + fromMember + "] ➔ [" + toMember + "] 총 " + changedCount + "건이 임시 저장되었습니다.\n하단의 [변경사항 저장] 버튼을 눌러 저장해 주세요.");
 }
 
-// [수정됨] 저장 시 JSON 서버 전송 및 예외 처리
 function saveAllChangesToServer() {
     var modifiedItems = tempScheduleData.filter(function(i){ return i.isModified; });
     if (modifiedItems.length === 0) return alert("수정된 내역이 없습니다.");
@@ -354,20 +364,20 @@ function saveAllChangesToServer() {
                 originalScheduleData = saveData;
                 tempScheduleData = JSON.parse(JSON.stringify(originalScheduleData));
                 refreshAllUI();
-                alert("✅ 구글 시트에 성공적으로 저장 및 공유되었습니다!");
+                alert("구글 시트에 성공적으로 저장 및 공유되었습니다!");
             } else {
-                alert("⚠️ 저장 실패: " + (data.message || "오류가 발생했습니다."));
+                alert("저장 실패: " + (data.message || "오류가 발생했습니다."));
             }
         })
         .catch(err => {
             console.error(err);
-            alert("⚠️ 저장 중 네트워크 오류가 발생했습니다.");
+            alert("저장 중 네트워크 오류가 발생했습니다.");
         });
     } else {
         originalScheduleData = saveData;
         tempScheduleData = JSON.parse(JSON.stringify(originalScheduleData));
         refreshAllUI();
-        alert("✅ 변경사항이 정상 저장되었습니다!");
+        alert("변경사항이 정상 저장되었습니다!");
     }
 }
 
@@ -387,6 +397,7 @@ function refreshAllUI() {
     renderCalendar();
     renderList();
     initSwapDateOptions();
+    lucide.createIcons();
 }
 
 function initSwapDateOptions() {
@@ -394,7 +405,6 @@ function initSwapDateOptions() {
     if (!dateSel) return;
     dateSel.innerHTML = "";
     
-    // 근무일만 추출 후 id(날짜 순서) 기준으로 정렬
     var workItems = tempScheduleData.filter(function(item){ return !item.isHoliday; });
     workItems.sort(function(a, b) {
         return (parseInt(a.id) || 0) - (parseInt(b.id) || 0);
@@ -413,7 +423,7 @@ function initSwapDateOptions() {
 function fetchDataFromGoogleSheet() {
     if (!GAS_WEB_APP_URL || GAS_WEB_APP_URL.includes("YOUR_GOOGLE_APPS_SCRIPT")) {
         tempScheduleData = JSON.parse(JSON.stringify(originalScheduleData));
-        sortScheduleData(tempScheduleData); // 정렬 실행
+        sortScheduleData(tempScheduleData);
         refreshAllUI();
         return;
     }
@@ -429,18 +439,17 @@ function fetchDataFromGoogleSheet() {
                 originalScheduleData = parsedData;
             }
             tempScheduleData = JSON.parse(JSON.stringify(originalScheduleData));
-            sortScheduleData(tempScheduleData); // 정렬 실행
+            sortScheduleData(tempScheduleData);
             refreshAllUI();
         })
         .catch(err => {
-            console.error("데이터 로드 오류 (기존 데이터를 유지합니다):", err);
+            console.error("데이터 로드 오류:", err);
             tempScheduleData = JSON.parse(JSON.stringify(originalScheduleData));
-            sortScheduleData(tempScheduleData); // 정렬 실행
+            sortScheduleData(tempScheduleData);
             refreshAllUI();
         });
 }
 
-// 💡 날짜(id 기준) 순서대로 정렬해주는 헬퍼 함수 추가
 function sortScheduleData(arr) {
     arr.sort(function(a, b) {
         return (parseInt(a.id) || 0) - (parseInt(b.id) || 0);
@@ -467,13 +476,14 @@ function switchTab(type) {
     document.getElementById("tabList").classList.toggle("active", type === "list");
 }
 
-function onFilterChange() { renderCalendar(); renderList(); }
+function onFilterChange() { renderCalendar(); renderList(); lucide.createIcons(); }
 
 function changeMonth(delta) {
     currentMonth += delta;
     if(currentMonth < 0) currentMonth = 0;
     if(currentMonth > 11) currentMonth = 11;
     renderCalendar();
+    lucide.createIcons();
 }
 
 function renderCalendar() {
@@ -558,7 +568,7 @@ function renderList() {
             var pyeStr = item.pyeSwapInfo ? "<span class='swapped-name'>" + item.pyeWorker + "</span>" : (item.pyeWorker === val ? "<mark>" + item.pyeWorker + "</mark>" : item.pyeWorker);
             
             var noteParts = [];
-            if(item.isSandwich) noteParts.push("🥪");
+            if(item.isSandwich) noteParts.push("<i data-lucide='sandwich' class='icon-sm' style='color:#d97706;'></i>");
             
             var swaps = [];
             if(item.tukSwapInfo) swaps.push(item.tukSwapInfo);
@@ -573,6 +583,7 @@ function renderList() {
         }
         tbody.appendChild(tr);
     });
+    lucide.createIcons();
 }
 
 function recalcStats() {
